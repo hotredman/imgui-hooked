@@ -390,6 +390,112 @@ void ImGui::StyleColorsLight(ImGuiStyle* dst)
 }
 
 //-----------------------------------------------------------------------------
+// [SECTION] ImDrawList & ImDrawListSplitter Vector Backend Hooks
+//-----------------------------------------------------------------------------
+#ifndef IMGUI_DRAWLIST_HOOK_RESET
+#define IMGUI_DRAWLIST_HOOK_RESET(dl)                                                         ((void)0)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_PUSH_CLIP_RECT
+#define IMGUI_DRAWLIST_HOOK_PUSH_CLIP_RECT(dl, min, max, intersect)                           ((void)0)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_POP_CLIP_RECT
+#define IMGUI_DRAWLIST_HOOK_POP_CLIP_RECT(dl)                                                 ((void)0)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_PUSH_TEXTURE
+#define IMGUI_DRAWLIST_HOOK_PUSH_TEXTURE(dl, tex)                                             ((void)0)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_POP_TEXTURE
+#define IMGUI_DRAWLIST_HOOK_POP_TEXTURE(dl)                                                   ((void)0)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_CALLBACK
+#define IMGUI_DRAWLIST_HOOK_CALLBACK(dl, cb, data, sz)                                        (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_LINE
+#define IMGUI_DRAWLIST_HOOK_LINE(dl, p1, p2, col, t)                                          (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_LINE_H
+#define IMGUI_DRAWLIST_HOOK_LINE_H(dl, min_x, max_x, y, col, t)                               (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_LINE_V
+#define IMGUI_DRAWLIST_HOOK_LINE_V(dl, x, min_y, max_y, col, t)                               (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_RECT
+#define IMGUI_DRAWLIST_HOOK_RECT(dl, min, max, col, r, t, flags)                              (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_RECT_FILLED
+#define IMGUI_DRAWLIST_HOOK_RECT_FILLED(dl, min, max, col, r, flags)                          (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_RECT_FILLED_MULTICOLOR
+#define IMGUI_DRAWLIST_HOOK_RECT_FILLED_MULTICOLOR(dl, min, max, c1, c2, c3, c4)             (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_QUAD
+#define IMGUI_DRAWLIST_HOOK_QUAD(dl, p1, p2, p3, p4, col, t)                                  (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_QUAD_FILLED
+#define IMGUI_DRAWLIST_HOOK_QUAD_FILLED(dl, p1, p2, p3, p4, col)                              (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_TRIANGLE
+#define IMGUI_DRAWLIST_HOOK_TRIANGLE(dl, p1, p2, p3, col, t)                                  (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_TRIANGLE_FILLED
+#define IMGUI_DRAWLIST_HOOK_TRIANGLE_FILLED(dl, p1, p2, p3, col)                              (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_CIRCLE
+#define IMGUI_DRAWLIST_HOOK_CIRCLE(dl, c, r, col, seg, t)                                     (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_CIRCLE_FILLED
+#define IMGUI_DRAWLIST_HOOK_CIRCLE_FILLED(dl, c, r, col, seg)                                 (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_NGON
+#define IMGUI_DRAWLIST_HOOK_NGON(dl, c, r, col, seg, t)                                      (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_NGON_FILLED
+#define IMGUI_DRAWLIST_HOOK_NGON_FILLED(dl, c, r, col, seg)                                  (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_ELLIPSE
+#define IMGUI_DRAWLIST_HOOK_ELLIPSE(dl, c, r, col, rot, seg, t)                               (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_ELLIPSE_FILLED
+#define IMGUI_DRAWLIST_HOOK_ELLIPSE_FILLED(dl, c, r, col, rot, seg)                           (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_BEZIER_CUBIC
+#define IMGUI_DRAWLIST_HOOK_BEZIER_CUBIC(dl, p1, p2, p3, p4, col, t, seg)                     (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_BEZIER_QUADRATIC
+#define IMGUI_DRAWLIST_HOOK_BEZIER_QUADRATIC(dl, p1, p2, p3, col, t, seg)                     (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_POLYLINE
+#define IMGUI_DRAWLIST_HOOK_POLYLINE(dl, pts, count, col, t, flags)                           (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_CONVEX_POLY_FILLED
+#define IMGUI_DRAWLIST_HOOK_CONVEX_POLY_FILLED(dl, pts, count, col)                           (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_CONCAVE_POLY_FILLED
+#define IMGUI_DRAWLIST_HOOK_CONCAVE_POLY_FILLED(dl, pts, count, col)                          (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_TEXT
+#define IMGUI_DRAWLIST_HOOK_TEXT(dl, font, sz, pos, col, tb, te, wrap, clip)                 (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_IMAGE
+#define IMGUI_DRAWLIST_HOOK_IMAGE(dl, tex, min, max, uv_min, uv_max, col)                     (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_IMAGE_QUAD
+#define IMGUI_DRAWLIST_HOOK_IMAGE_QUAD(dl, tex, p1, p2, p3, p4, u1, u2, u3, u4, col)          (false)
+#endif
+#ifndef IMGUI_DRAWLIST_HOOK_IMAGE_ROUNDED
+#define IMGUI_DRAWLIST_HOOK_IMAGE_ROUNDED(dl, tex, min, max, uv_min, uv_max, col, r, flags)   (false)
+#endif
+#ifndef IMGUI_SPLITTER_HOOK_SPLIT
+#define IMGUI_SPLITTER_HOOK_SPLIT(sp, dl, count)                                              ((void)0)
+#endif
+#ifndef IMGUI_SPLITTER_HOOK_SET_CHANNEL
+#define IMGUI_SPLITTER_HOOK_SET_CHANNEL(sp, dl, idx)                                          ((void)0)
+#endif
+#ifndef IMGUI_SPLITTER_HOOK_MERGE
+#define IMGUI_SPLITTER_HOOK_MERGE(sp, dl)                                                     ((void)0)
+#endif
+
+//-----------------------------------------------------------------------------
 // [SECTION] ImDrawList
 //-----------------------------------------------------------------------------
 
@@ -448,6 +554,8 @@ void ImDrawList::_SetDrawListSharedData(ImDrawListSharedData* data)
 // In the majority of cases, you would want to call PushClipRect() and PushTexture() after this.
 void ImDrawList::_ResetForNewFrame()
 {
+    IMGUI_DRAWLIST_HOOK_RESET(this);
+
     // Verify that the ImDrawCmd fields we want to memcmp() are contiguous in memory to match ImDrawCmdHeader.
     IM_STATIC_ASSERT(offsetof(ImDrawCmd, ClipRect) == 0);
     IM_STATIC_ASSERT(offsetof(ImDrawCmd, TexRef) == sizeof(ImVec4));
@@ -529,6 +637,9 @@ void ImDrawList::_PopUnusedDrawCmd()
 
 void ImDrawList::AddCallback(ImDrawCallback callback, void* userdata, size_t userdata_size)
 {
+    if (IMGUI_DRAWLIST_HOOK_CALLBACK(this, callback, userdata, userdata_size))
+        return;
+
     IM_ASSERT(callback != NULL);
 #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
     if (callback == ImDrawCallback_ResetRenderState && _Data->Context != NULL && _Data->Context->PlatformIO.DrawCallback_ResetRenderState != NULL)
@@ -665,6 +776,7 @@ int ImDrawList::_CalcCircleAutoSegmentCount(float radius) const
 // Render-level scissoring. This is passed down to your render function but not used for CPU-side coarse clipping. Prefer using higher-level ImGui::PushClipRect() to affect logic (hit-testing and widget culling)
 void ImDrawList::PushClipRect(const ImVec2& cr_min, const ImVec2& cr_max, bool intersect_with_current_clip_rect)
 {
+    IMGUI_DRAWLIST_HOOK_PUSH_CLIP_RECT(this, cr_min, cr_max, intersect_with_current_clip_rect);
     ImVec4 cr(cr_min.x, cr_min.y, cr_max.x, cr_max.y);
     if (intersect_with_current_clip_rect)
     {
@@ -689,6 +801,7 @@ void ImDrawList::PushClipRectFullScreen()
 
 void ImDrawList::PopClipRect()
 {
+    IMGUI_DRAWLIST_HOOK_POP_CLIP_RECT(this);
     _ClipRectStack.pop_back();
     _CmdHeader.ClipRect = (_ClipRectStack.Size == 0) ? _Data->ClipRectFullscreen : _ClipRectStack.Data[_ClipRectStack.Size - 1];
     _OnChangedClipRect();
@@ -696,6 +809,7 @@ void ImDrawList::PopClipRect()
 
 void ImDrawList::PushTexture(ImTextureRef tex_ref)
 {
+    IMGUI_DRAWLIST_HOOK_PUSH_TEXTURE(this, tex_ref);
     _TextureStack.push_back(tex_ref);
     _CmdHeader.TexRef = tex_ref;
     if (tex_ref._TexData != NULL)
@@ -705,6 +819,7 @@ void ImDrawList::PushTexture(ImTextureRef tex_ref)
 
 void ImDrawList::PopTexture()
 {
+    IMGUI_DRAWLIST_HOOK_POP_TEXTURE(this);
     _TextureStack.pop_back();
     _CmdHeader.TexRef = (_TextureStack.Size == 0) ? ImTextureRef() : _TextureStack.Data[_TextureStack.Size - 1];
     _OnChangedTexture();
@@ -823,6 +938,8 @@ void ImDrawList::PrimQuadUV(const ImVec2& a, const ImVec2& b, const ImVec2& c, c
 void ImDrawList::AddPolyline(const ImVec2* points, const int points_count, ImU32 col, float thickness, ImDrawFlags flags)
 {
     if (points_count < 2 || (col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_POLYLINE(this, points, points_count, col, thickness, flags))
         return;
 
     const bool closed = (flags & ImDrawFlags_Closed) != 0;
@@ -1087,6 +1204,8 @@ void ImDrawList::AddPolyline(const ImVec2* points, const int points_count, ImU32
 void ImDrawList::AddConvexPolyFilled(const ImVec2* points, const int points_count, ImU32 col)
 {
     if (points_count < 3 || (col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_CONVEX_POLY_FILLED(this, points, points_count, col))
         return;
 
     const ImVec2 uv = _Data->TexUvWhitePixel;
@@ -1488,6 +1607,8 @@ void ImDrawList::AddLine(const ImVec2& p1, const ImVec2& p2, ImU32 col, float th
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_LINE(this, p1, p2, col, thickness))
+        return;
     const ImVec2 points[2] = { ImVec2(p1.x + 0.5f, p1.y + 0.5f), ImVec2(p2.x + 0.5f, p2.y + 0.5f) };
     AddPolyline(points, 2, col, thickness);
 }
@@ -1496,6 +1617,8 @@ void ImDrawList::AddLineH(float min_x, float max_x, float y, ImU32 col, float th
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_LINE_H(this, min_x, max_x, y, col, thickness))
+        return;
     const ImVec2 points[2] = { ImVec2(min_x + 0.5f, y + 0.5f), ImVec2(max_x + 0.5f, y + 0.5f) }; // Same as AddLine() above.
     AddPolyline(points, 2, col, thickness);
 }
@@ -1503,6 +1626,8 @@ void ImDrawList::AddLineH(float min_x, float max_x, float y, ImU32 col, float th
 void ImDrawList::AddLineV(float x, float min_y, float max_y, ImU32 col, float thickness)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_LINE_V(this, x, min_y, max_y, col, thickness))
         return;
     const ImVec2 points[2] = { ImVec2(x + 0.5f, min_y + 0.5f), ImVec2(x + 0.5f, max_y + 0.5f) }; // Same as AddLine() above.
     AddPolyline(points, 2, col, thickness);
@@ -1525,6 +1650,8 @@ void ImDrawList::AddRect(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, fl
 
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_RECT(this, p_min, p_max, col, rounding, thickness, flags))
+        return;
     if (Flags & ImDrawListFlags_AntiAliasedLines)
         PathRect(p_min + ImVec2(0.50f, 0.50f), p_max - ImVec2(0.50f, 0.50f), rounding, flags);
     else
@@ -1535,6 +1662,8 @@ void ImDrawList::AddRect(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, fl
 void ImDrawList::AddRectFilled(const ImVec2& p_min, const ImVec2& p_max, ImU32 col, float rounding, ImDrawFlags flags)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_RECT_FILLED(this, p_min, p_max, col, rounding, flags))
         return;
     if (rounding < 0.5f || (flags & ImDrawFlags_RoundCornersMask_) == ImDrawFlags_RoundCornersNone)
     {
@@ -1553,6 +1682,8 @@ void ImDrawList::AddRectFilledMultiColor(const ImVec2& p_min, const ImVec2& p_ma
 {
     if (((col_upr_left | col_upr_right | col_bot_right | col_bot_left) & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_RECT_FILLED_MULTICOLOR(this, p_min, p_max, col_upr_left, col_upr_right, col_bot_right, col_bot_left))
+        return;
 
     const ImVec2 uv = _Data->TexUvWhitePixel;
     PrimReserve(6, 4);
@@ -1568,6 +1699,8 @@ void ImDrawList::AddQuad(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, c
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_QUAD(this, p1, p2, p3, p4, col, thickness))
+        return;
 
     PathLineTo(p1);
     PathLineTo(p2);
@@ -1579,6 +1712,8 @@ void ImDrawList::AddQuad(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, c
 void ImDrawList::AddQuadFilled(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, ImU32 col)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_QUAD_FILLED(this, p1, p2, p3, p4, col))
         return;
 
     PathLineTo(p1);
@@ -1592,6 +1727,8 @@ void ImDrawList::AddTriangle(const ImVec2& p1, const ImVec2& p2, const ImVec2& p
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_TRIANGLE(this, p1, p2, p3, col, thickness))
+        return;
 
     PathLineTo(p1);
     PathLineTo(p2);
@@ -1603,6 +1740,8 @@ void ImDrawList::AddTriangleFilled(const ImVec2& p1, const ImVec2& p2, const ImV
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_TRIANGLE_FILLED(this, p1, p2, p3, col))
+        return;
 
     PathLineTo(p1);
     PathLineTo(p2);
@@ -1613,6 +1752,8 @@ void ImDrawList::AddTriangleFilled(const ImVec2& p1, const ImVec2& p2, const ImV
 void ImDrawList::AddCircle(const ImVec2& center, float radius, ImU32 col, int num_segments, float thickness)
 {
     if ((col & IM_COL32_A_MASK) == 0 || radius < 0.5f)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_CIRCLE(this, center, radius, col, num_segments, thickness))
         return;
 
     if (num_segments <= 0)
@@ -1637,6 +1778,8 @@ void ImDrawList::AddCircle(const ImVec2& center, float radius, ImU32 col, int nu
 void ImDrawList::AddCircleFilled(const ImVec2& center, float radius, ImU32 col, int num_segments)
 {
     if ((col & IM_COL32_A_MASK) == 0 || radius < 0.5f)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_CIRCLE_FILLED(this, center, radius, col, num_segments))
         return;
 
     if (num_segments <= 0)
@@ -1663,6 +1806,8 @@ void ImDrawList::AddNgon(const ImVec2& center, float radius, ImU32 col, int num_
 {
     if ((col & IM_COL32_A_MASK) == 0 || num_segments <= 2)
         return;
+    if (IMGUI_DRAWLIST_HOOK_NGON(this, center, radius, col, num_segments, thickness))
+        return;
 
     // Because we are filling a closed shape we remove 1 from the count of segments/points
     const float a_max = (IM_PI * 2.0f) * ((float)num_segments - 1.0f) / (float)num_segments;
@@ -1675,6 +1820,8 @@ void ImDrawList::AddNgonFilled(const ImVec2& center, float radius, ImU32 col, in
 {
     if ((col & IM_COL32_A_MASK) == 0 || num_segments <= 2)
         return;
+    if (IMGUI_DRAWLIST_HOOK_NGON_FILLED(this, center, radius, col, num_segments))
+        return;
 
     // Because we are filling a closed shape we remove 1 from the count of segments/points
     const float a_max = (IM_PI * 2.0f) * ((float)num_segments - 1.0f) / (float)num_segments;
@@ -1686,6 +1833,8 @@ void ImDrawList::AddNgonFilled(const ImVec2& center, float radius, ImU32 col, in
 void ImDrawList::AddEllipse(const ImVec2& center, const ImVec2& radius, ImU32 col, float rot, int num_segments, float thickness)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_ELLIPSE(this, center, radius, col, rot, num_segments, thickness))
         return;
 
     if (num_segments <= 0)
@@ -1700,6 +1849,8 @@ void ImDrawList::AddEllipse(const ImVec2& center, const ImVec2& radius, ImU32 co
 void ImDrawList::AddEllipseFilled(const ImVec2& center, const ImVec2& radius, ImU32 col, float rot, int num_segments)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_ELLIPSE_FILLED(this, center, radius, col, rot, num_segments))
         return;
 
     if (num_segments <= 0)
@@ -1716,6 +1867,8 @@ void ImDrawList::AddBezierCubic(const ImVec2& p1, const ImVec2& p2, const ImVec2
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_BEZIER_CUBIC(this, p1, p2, p3, p4, col, thickness, num_segments))
+        return;
 
     PathLineTo(p1);
     PathBezierCubicCurveTo(p2, p3, p4, num_segments);
@@ -1726,6 +1879,8 @@ void ImDrawList::AddBezierCubic(const ImVec2& p1, const ImVec2& p2, const ImVec2
 void ImDrawList::AddBezierQuadratic(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, ImU32 col, float thickness, int num_segments)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_BEZIER_QUADRATIC(this, p1, p2, p3, col, thickness, num_segments))
         return;
 
     PathLineTo(p1);
@@ -1749,6 +1904,9 @@ void ImDrawList::AddText(ImFont* font, float font_size, const ImVec2& pos, ImU32
     if (font_size == 0.0f)
         font_size = _Data->FontSize;
 
+    if (IMGUI_DRAWLIST_HOOK_TEXT(this, font, font_size, pos, col, text_begin, text_end, wrap_width, cpu_fine_clip_rect))
+        return;
+
     ImVec4 clip_rect = _CmdHeader.ClipRect;
     if (cpu_fine_clip_rect)
     {
@@ -1769,6 +1927,8 @@ void ImDrawList::AddImage(ImTextureRef tex_ref, const ImVec2& p_min, const ImVec
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_IMAGE(this, tex_ref, p_min, p_max, uv_min, uv_max, col))
+        return;
 
     const bool push_texture_id = tex_ref != _CmdHeader.TexRef;
     if (push_texture_id)
@@ -1785,6 +1945,8 @@ void ImDrawList::AddImageQuad(ImTextureRef tex_ref, const ImVec2& p1, const ImVe
 {
     if ((col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_IMAGE_QUAD(this, tex_ref, p1, p2, p3, p4, uv1, uv2, uv3, uv4, col))
+        return;
 
     const bool push_texture_id = tex_ref != _CmdHeader.TexRef;
     if (push_texture_id)
@@ -1800,6 +1962,8 @@ void ImDrawList::AddImageQuad(ImTextureRef tex_ref, const ImVec2& p1, const ImVe
 void ImDrawList::AddImageRounded(ImTextureRef tex_ref, const ImVec2& p_min, const ImVec2& p_max, const ImVec2& uv_min, const ImVec2& uv_max, ImU32 col, float rounding, ImDrawFlags flags)
 {
     if ((col & IM_COL32_A_MASK) == 0)
+        return;
+    if (IMGUI_DRAWLIST_HOOK_IMAGE_ROUNDED(this, tex_ref, p_min, p_max, uv_min, uv_max, col, rounding, flags))
         return;
 
     IM_ASSERT((flags & 0x0F) == 0 && "Misuse of legacy hardcoded ImDrawCornerFlags values!"); // If this assert triggers on legacy code: see comments in ImDrawList::PathRect().
@@ -2051,6 +2215,8 @@ void ImDrawList::AddConcavePolyFilled(const ImVec2* points, const int points_cou
 {
     if (points_count < 3 || (col & IM_COL32_A_MASK) == 0)
         return;
+    if (IMGUI_DRAWLIST_HOOK_CONCAVE_POLY_FILLED(this, points, points_count, col))
+        return;
 
     const ImVec2 uv = _Data->TexUvWhitePixel;
     ImTriangulator triangulator;
@@ -2159,6 +2325,7 @@ void ImDrawListSplitter::ClearFreeMemory()
 
 void ImDrawListSplitter::Split(ImDrawList* draw_list, int channels_count)
 {
+    IMGUI_SPLITTER_HOOK_SPLIT(this, draw_list, channels_count);
     IM_UNUSED(draw_list);
     IM_ASSERT(_Current == 0 && _Count <= 1 && "Nested channel splitting is not supported. Please use separate instances of ImDrawListSplitter.");
     int old_channels_count = _Channels.Size;
@@ -2189,6 +2356,8 @@ void ImDrawListSplitter::Split(ImDrawList* draw_list, int channels_count)
 
 void ImDrawListSplitter::Merge(ImDrawList* draw_list)
 {
+    IMGUI_SPLITTER_HOOK_MERGE(this, draw_list);
+
     // Note that we never use or rely on _Channels.Size because it is merely a buffer that we never shrink back to 0 to keep all sub-buffers ready for use.
     if (_Count <= 1)
         return;
@@ -2260,6 +2429,7 @@ void ImDrawListSplitter::Merge(ImDrawList* draw_list)
 
 void ImDrawListSplitter::SetCurrentChannel(ImDrawList* draw_list, int idx)
 {
+    IMGUI_SPLITTER_HOOK_SET_CHANNEL(this, draw_list, idx);
     IM_ASSERT(idx >= 0 && idx < _Count);
     if (_Current == idx)
         return;
