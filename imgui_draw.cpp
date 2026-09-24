@@ -494,6 +494,9 @@ void ImGui::StyleColorsLight(ImGuiStyle* dst)
 #ifndef IMGUI_SPLITTER_HOOK_MERGE
 #define IMGUI_SPLITTER_HOOK_MERGE(sp, dl)                                                     ((void)0)
 #endif
+#ifndef IMGUI_DRAWLIST_HOOK_HAS_INTERCEPTION
+#define IMGUI_DRAWLIST_HOOK_HAS_INTERCEPTION(dl)                                               (false)
+#endif
 
 //-----------------------------------------------------------------------------
 // [SECTION] ImDrawList
@@ -2475,7 +2478,7 @@ void ImGui::AddDrawListToDrawDataEx(ImDrawData* draw_data, ImVector<ImDrawList*>
 {
     if (draw_list->CmdBuffer.Size == 0)
         return;
-    if (draw_list->CmdBuffer.Size == 1 && draw_list->CmdBuffer[0].ElemCount == 0 && draw_list->CmdBuffer[0].UserCallback == NULL)
+    if (draw_list->CmdBuffer.Size == 1 && draw_list->CmdBuffer[0].ElemCount == 0 && draw_list->CmdBuffer[0].UserCallback == NULL && !IMGUI_DRAWLIST_HOOK_HAS_INTERCEPTION(draw_list))
         return;
 
     // Draw list sanity check. Detect mismatch between PrimReserve() calls and incrementing _VtxCurrentIdx, _VtxWritePtr etc.
